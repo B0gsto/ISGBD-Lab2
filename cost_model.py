@@ -3,13 +3,13 @@ from typing import Optional
 from models import Table, Index, TableStats
 
 
-PAGE_SIZE = 8192
+PAGE_SIZE = 8192 # bytes
 
-SEQ_PAGE_COST = 1.0
-RANDOM_PAGE_COST = 4.0
-CPU_TUPLE_COST = 0.01
-CPU_INDEX_COST = 0.005
-CPU_OPERATOR_COST = 0.0025
+SEQ_PAGE_COST = 1.0 # cost of sequential page access -> prefetching + caching
+RANDOM_PAGE_COST = 4.0 # cost of random page access -> disk access
+CPU_TUPLE_COST = 0.01 # cost of processing a tuple -> CPU + memory access
+CPU_INDEX_COST = 0.005 # cost of processing an index entry -> CPU + memory access
+CPU_OPERATOR_COST = 0.0025 # cost of processing an operator -> CPU + memory access
 
 
 @dataclass

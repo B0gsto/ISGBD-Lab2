@@ -62,10 +62,16 @@ class JoinCondition:
     left_column: str
     right_table: str
     right_column: str
+    table_name: str = ""  # Actual table name (right_table is alias)
     join_type: JoinType = JoinType.INNER
     
     def __str__(self) -> str:
-        return (f"{self.join_type.value} {self.right_table} "
+        # Use table_name with alias if available, otherwise just right_table
+        if self.table_name and self.table_name != self.right_table:
+            table_part = f"{self.table_name} AS {self.right_table}"
+        else:
+            table_part = self.right_table
+        return (f"{self.join_type.value} {table_part} "
                 f"ON {self.left_table}.{self.left_column} = "
                 f"{self.right_table}.{self.right_column}")
 
@@ -123,6 +129,7 @@ class Query:
             left_column=left_column,
             right_table=alias if alias else table,
             right_column=right_column,
+            table_name=table,
             join_type=join_type
         ))
         
